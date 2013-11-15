@@ -14,6 +14,8 @@
 # limitations under the License.
 #
 
+TARGET_OTA_ASSERT_DEVICE := hammerhead
+
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_SMP := true
