@@ -132,6 +132,9 @@ on boot
     chown system system /sys/class/leds/blue/on_off_ms
     chown system system /sys/class/leds/red/rgb_start
 
+    # LED On/Off synchronization
+    chown system system /sys/class/leds/red/device/lock
+
 on post-fs-data
     mkdir /data/media 0770 media_rw media_rw
 
