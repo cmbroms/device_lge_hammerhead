@@ -310,10 +310,6 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.input.noresample=1
 
-# Kernel Overrides
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.kernel.android.checkjni=1
-
 # setup dalvik vm configs.
 $(call inherit-product, frameworks/native/build/phone-xhdpi-2048-dalvik-heap.mk)
 
