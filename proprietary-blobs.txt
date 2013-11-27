@@ -229,3 +229,5 @@
 /system/vendor/lib/libwvm.so
 /system/vendor/lib/libWVStreamControlAPI_L1.so
 /system/vendor/lib/mediadrm/libwvdrmengine.so
+/system/vendor/media/LMspeed_508.emd
+/system/vendor/media/PFFprec_600.emd
