@@ -117,7 +117,7 @@ BOARD_CUSTOM_BOOTIMG_MK := device/lge/hammerhead/mkbootimg.mk
 
 # Kernel inline build
 TARGET_KERNEL_SOURCE := kernel/lge/hammerhead
-TARGET_KERNEL_CONFIG := hammerhead_defconfig
+TARGET_KERNEL_CONFIG := cmb_hammerhead_defconfig
 
 # Krait optimizations
 TARGET_USE_KRAIT_BIONIC_OPTIMIZATION := true
