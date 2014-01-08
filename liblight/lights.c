@@ -16,7 +16,7 @@
 
 
 #define LOG_TAG "lights"
-#define DEBUG 1
+#define DEBUG 0
 
 #include <cutils/log.h>
 
@@ -183,7 +183,7 @@ static int set_light_locked(struct light_state_t const* state, int type)
     }
 
 #if DEBUG
-    ALOGD("set_light_locked: mode %d, colorRGB=%08X, onMS=%d, offMS=%d, type=%d\n",
+    ALOGD("set_light_locked: mode %d, color=%08X, onMS=%d, offMS=%d, type=%d\n",
             state->flashMode, state->color, led->onMS, led->offMS, type);
 #endif
 
@@ -268,6 +268,7 @@ static int set_light_attention(struct light_device_t* dev,
 
     return 0;
 }
+
 
 /** Close the lights device */
 static int close_lights(struct light_device_t *dev)

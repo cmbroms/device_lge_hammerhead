@@ -283,6 +283,4 @@
          config to 7. -->
     <integer name="config_deviceHardwareKeys">0</integer>
 
-    <string name="default_wallpaper_component" translatable="false">com.android.phasebeam/.PhaseBeamWallpaper</string>
-
 </resources>
