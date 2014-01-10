@@ -29,7 +29,7 @@ BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_SEPARATED_DT := true
 
-BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=hammerhead user_debug=31 maxcpus=2 msm_watchdog_v2.enable=1
+BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=hammerhead user_debug=31 msm_watchdog_v2.enable=1
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x02900000 --tags_offset 0x02700000
 BOARD_KERNEL_IMAGE_NAME := zImage-dtb
 
@@ -44,6 +44,7 @@ MAX_EGL_CACHE_KEY_SIZE := 12*1024
 MAX_EGL_CACHE_SIZE := 2048*1024
 
 BOARD_USES_ALSA_AUDIO := true
+AUDIO_FEATURE_DEEP_BUFFER_PRIMARY := true
 
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
@@ -100,6 +101,12 @@ BOARD_HAL_STATIC_LIBRARIES := libdumpstate.hammerhead
 BOARD_SEPOLICY_DIRS := \
        device/lge/hammerhead/sepolicy
 
+BOARD_CUSTOM_BOOTIMG_MK := device/lge/hammerhead/mkbootimg.mk
+
+# Kernel inline build
+TARGET_KERNEL_CONFIG := cmb_hammerhead_defconfig
+TARGET_KERNEL_SOURCE := kernel/lge/hammerhead
+
 # The list below is order dependent
 BOARD_SEPOLICY_UNION := \
        device.te \
@@ -113,19 +120,13 @@ TARGET_FORCE_HWC_FOR_VIRTUAL_DISPLAYS := true
 
 TARGET_TOUCHBOOST_FREQUENCY:= 1200
 
-BOARD_CUSTOM_BOOTIMG_MK := device/lge/hammerhead/mkbootimg.mk
-
-# Kernel inline build
-TARGET_KERNEL_SOURCE := kernel/lge/hammerhead
-TARGET_KERNEL_CONFIG := cmb_hammerhead_defconfig
-
 # Krait optimizations
-TARGET_USE_KRAIT_BIONIC_OPTIMIZATION := true
-TARGET_USE_KRAIT_PLD_SET := true
-TARGET_KRAIT_BIONIC_PLDOFFS := 10
-TARGET_KRAIT_BIONIC_PLDTHRESH := 10
-TARGET_KRAIT_BIONIC_BBTHRESH := 64
-TARGET_KRAIT_BIONIC_PLDSIZE := 64
+#TARGET_USE_KRAIT_BIONIC_OPTIMIZATION := true
+#TARGET_USE_KRAIT_PLD_SET := true
+#TARGET_KRAIT_BIONIC_PLDOFFS := 10
+#TARGET_KRAIT_BIONIC_PLDTHRESH := 10
+#TARGET_KRAIT_BIONIC_BBTHRESH := 64
+#TARGET_KRAIT_BIONIC_PLDSIZE := 64
 
 # Recovery
 RECOVERY_FSTAB_VERSION := 2
