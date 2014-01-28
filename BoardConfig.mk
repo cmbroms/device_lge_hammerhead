@@ -105,7 +105,7 @@ BOARD_SEPOLICY_DIRS := \
 BOARD_CUSTOM_BOOTIMG_MK := device/lge/hammerhead/mkbootimg.mk
 
 # Kernel inline build
-TARGET_KERNEL_CONFIG := cmb_hammerhead_defconfig
+TARGET_KERNEL_CONFIG := cm_hammerhead_defconfig
 TARGET_KERNEL_SOURCE := kernel/lge/hammerhead
 
 # The list below is order dependent
