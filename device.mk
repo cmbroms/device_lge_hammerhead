@@ -21,12 +21,9 @@
 
 PRODUCT_COPY_FILES += \
     device/lge/hammerhead/init.hammerhead.rc:root/init.hammerhead.rc \
-    device/lge/hammerhead/default.prop:/root/default.prop \
     device/lge/hammerhead/init.hammerhead.usb.rc:root/init.hammerhead.usb.rc \
     device/lge/hammerhead/fstab.hammerhead:root/fstab.hammerhead \
     device/lge/hammerhead/ueventd.hammerhead.rc:root/ueventd.hammerhead.rc
-
-$(COMMON_FOLDER)/default.prop:/root/default.prop \
 
 # Input device files for hammerhead
 PRODUCT_COPY_FILES += \
@@ -205,13 +202,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     qrngd \
     qrngp
-
-#tmp debug overrides
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.service.adb.enable=1 \
-    persist.service.debuggable=1 \
-    persist.sys.usb.config=mtp,adb
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.opengles.version=196608
