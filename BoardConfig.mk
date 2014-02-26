@@ -102,7 +102,7 @@ BOARD_HAL_STATIC_LIBRARIES := libdumpstate.hammerhead
 BOARD_SEPOLICY_DIRS := \
        device/lge/hammerhead/sepolicy
 
-BOARD_CUSTOM_BOOTIMG_MK := device/lge/hammerhead/mkbootimg.mk
+#BOARD_CUSTOM_BOOTIMG_MK := device/lge/hammerhead/mkbootimg.mk
 
 # Kernel inline build
 TARGET_KERNEL_CONFIG := cyanogenmod_hammerhead_defconfig
