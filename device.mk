@@ -19,6 +19,7 @@
 #
 # Everything in this directory will become public
 
+
 PRODUCT_COPY_FILES += \
     device/lge/hammerhead/init.hammerhead.rc:root/init.hammerhead.rc \
     device/lge/hammerhead/init.hammerhead.usb.rc:root/init.hammerhead.usb.rc \
@@ -45,6 +46,10 @@ PRODUCT_COPY_FILES += \
     device/lge/hammerhead/mixer_paths.xml:system/etc/mixer_paths.xml
 
 PRODUCT_COPY_FILES += \
+    frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_ffmpeg.xml:system/etc/media_codecs_ffmpeg.xml \
     device/lge/hammerhead/media_codecs.xml:system/etc/media_codecs.xml \
     device/lge/hammerhead/media_profiles.xml:system/etc/media_profiles.xml
 
@@ -56,6 +61,8 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
     frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
     frameworks/native/data/etc/android.hardware.camera.front.xml:system/etc/permissions/android.hardware.camera.front.xml \
+    frameworks/native/data/etc/android.hardware.camera.full.xml:system/etc/permissions/android.hardware.camera.full.xml \
+    frameworks/native/data/etc/android.hardware.camera.raw.xml:system/etc/permissions/android.hardware.camera.raw.xml \
     frameworks/native/data/etc/android.hardware.location.gps.xml:system/etc/permissions/android.hardware.location.gps.xml \
     frameworks/native/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
     frameworks/native/data/etc/android.hardware.wifi.direct.xml:system/etc/permissions/android.hardware.wifi.direct.xml \
@@ -72,7 +79,8 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml \
     frameworks/native/data/etc/android.hardware.audio.low_latency.xml:system/etc/permissions/android.hardware.audio.low_latency.xml \
     frameworks/native/data/etc/android.hardware.bluetooth_le.xml:system/etc/permissions/android.hardware.bluetooth_le.xml \
-    frameworks/native/data/etc/android.hardware.telephony.cdma.xml:system/etc/permissions/android.hardware.telephony.cdma.xml
+    frameworks/native/data/etc/android.hardware.telephony.cdma.xml:system/etc/permissions/android.hardware.telephony.cdma.xml \
+    frameworks/native/data/etc/android.hardware.ethernet.xml:system/etc/permissions/android.hardware.ethernet.xml
 
 # For GPS
 PRODUCT_COPY_FILES += \
@@ -86,7 +94,11 @@ PRODUCT_COPY_FILES += \
     device/lge/hammerhead/nfc/libnfc-brcm-20791b05.conf:system/etc/libnfc-brcm-20791b05.conf
 
 PRODUCT_COPY_FILES += \
-    device/lge/hammerhead/thermal-engine-hammerhead.conf:system/etc/thermal-engine.conf
+    device/lge/hammerhead/thermal-engine-8974.conf:system/etc/thermal-engine-8974.conf
+
+# For SPN display
+PRODUCT_COPY_FILES += \
+    device/lge/hammerhead/spn-conf.xml:system/etc/spn-conf.xml
 
 PRODUCT_TAGS += dalvik.gc.type-precise
 
@@ -101,6 +113,13 @@ PRODUCT_CHARACTERISTICS := nosdcard
 
 DEVICE_PACKAGE_OVERLAYS := \
     device/lge/hammerhead/overlay
+
+PRODUCT_PACKAGES := \
+    libwpa_client \
+    hostapd \
+    dhcpcd.conf \
+    wpa_supplicant \
+    wpa_supplicant.conf
 
 # Live Wallpapers
 PRODUCT_PACKAGES += \
@@ -129,13 +148,15 @@ PRODUCT_PACKAGES += \
     audio.a2dp.default \
     audio.usb.default \
     audio.r_submix.default \
-    libaudio-resampler
+    libaudio-resampler \
+    tinymix
 
 # Audio effects
 PRODUCT_PACKAGES += \
     libqcomvisualizer \
     libqcomvoiceprocessing \
-    libqcomvoiceprocessingdescriptors
+    libqcomvoiceprocessingdescriptors \
+    libqcompostprocbundle
 
 PRODUCT_COPY_FILES += \
     device/lge/hammerhead/audio_effects.conf:system/vendor/etc/audio_effects.conf
@@ -169,11 +190,13 @@ PRODUCT_PACKAGES += \
     libgeofence \
     libgps.utils \
     gps.msm8974 \
-    flp.msm8974
+    flp.msm8974 \
+    liblbs_core \
+    flp.conf
 
 # NFC packages
 PRODUCT_PACKAGES += \
-    nfc_nci.hammerhead \
+    nfc_nci.bcm2079x.default \
     NfcNci \
     Tag
 
@@ -192,16 +215,14 @@ PRODUCT_PACKAGES += \
 
 # for off charging mode
 PRODUCT_PACKAGES += \
-    charger \
     charger_res_images
 
 PRODUCT_PACKAGES += \
     bdAddrLoader
 
-# msm_rng entropy feeder
-PRODUCT_PACKAGES += \
-    qrngd \
-    qrngp
+# QCOM Perf lib
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.vendor.extension_library=/vendor/lib/libqc-opt.so
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.opengles.version=196608
@@ -230,27 +251,27 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Set sensor streaming rate
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.qc.sensors.max_geomag_rotvec=60 \
-    ro.qc.sensors.max_gyro_rate=200 \
-    ro.qc.sensors.max_accel_rate=200 \
-    ro.qc.sensors.max_grav=200 \
-    ro.qc.sensors.max_rotvec=200 \
-    ro.qc.sensors.max_ortn=200 \
-    ro.qc.sensors.max_linacc=200 \
-    ro.qc.sensors.max_gamerv_rate=200
+    ro.qti.sensors.max_geomag_rotv=60 \
+    ro.qti.sensors.max_gyro_rate=200 \
+    ro.qti.sensors.max_accel_rate=200 \
+    ro.qti.sensors.max_grav=200 \
+    ro.qti.sensors.max_rotvec=200 \
+    ro.qti.sensors.max_orient=200 \
+    ro.qti.sensors.max_linacc=200 \
+    ro.qti.sensors.max_gamerv_rate=200
 
 # Enable optional sensor types
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.qualcomm.sensors.smd=true \
-    ro.qualcomm.sensors.game_rv=true \
-    ro.qualcomm.sensors.georv=true \
-    ro.qc.sensors.smgr_mag_cal_en=true \
-    ro.qc.sensors.step_detector=true \
-    ro.qc.sensors.step_counter=true
+    ro.qti.sensors.smd=true \
+    ro.qti.sensors.game_rv=true \
+    ro.qti.sensors.georv=true \
+    ro.qti.sensors.smgr_mag_cal_en=true \
+    ro.qti.sensors.step_detector=true \
+    ro.qti.sensors.step_counter=true
 
 # Enable some debug messages by default
 PRODUCT_PROPERTY_OVERRIDES += \
-    debug.qualcomm.sns.hal=w \
+    persist.debug.sensors.hal=w \
     debug.qualcomm.sns.daemon=w \
     debug.qualcomm.sns.libsensor1=w
 
@@ -284,17 +305,19 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     persist.radio.use_cc_names=true
 
+# If data_no_toggle is 1 then active and dormancy enable at all times.
+# If data_no_toggle is 0 there are no reports if the screen is off.
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.radio.data_no_toggle=1
+
 # Audio Configuration
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.audio.handset.mic.type=digital \
     persist.audio.dualmic.config=endfire \
     persist.audio.fluence.voicecall=true \
+    persist.audio.fluence.voicecomm=true \
     persist.audio.fluence.voicerec=false \
-    persist.audio.fluence.speaker=false \
-    af.resampler.quality=4 \
-    audio.offload.buffer.size.kb=32 \
-    audio.offload.gapless.enabled=false \
-    av.offload.enable=true
+    persist.audio.fluence.speaker=false
 
 # Setup custom emergency number list based on the MCC. This is needed by RIL
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -321,14 +344,21 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.input.noresample=1
 
+# Modem debugger
+ifneq (,$(filter userdebug eng, $(TARGET_BUILD_VARIANT)))
+PRODUCT_PACKAGES += \
+    QXDMLogger
+
+PRODUCT_COPY_FILES += \
+    device/lge/hammerhead/init.hammerhead.diag.rc.userdebug:root/init.hammerhead.diag.rc
+else
+PRODUCT_COPY_FILES += \
+    device/lge/hammerhead/init.hammerhead.diag.rc.user:root/init.hammerhead.diag.rc
+endif
+
 # setup dalvik vm configs.
 $(call inherit-product, frameworks/native/build/phone-xhdpi-2048-dalvik-heap.mk)
 
 $(call inherit-product-if-exists, hardware/qcom/msm8x74/msm8x74.mk)
 $(call inherit-product-if-exists, vendor/qcom/gpu/msm8x74/msm8x74-gpu-vendor.mk)
 $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4339/device-bcm.mk)
-
-# Recovery Options
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.cwm.forbid_format=/persist,/firmware,/boot,/sbl1,/tz,/rpm,/sdi,/aboot,/imgdata \
-    ro.cwm.forbid_mount=/persist,/firmware
